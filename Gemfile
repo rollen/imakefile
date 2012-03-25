@@ -4,6 +4,7 @@ group :development do
   gem 'cucumber'
   gem 'rspec'
 
+  gem 'aruba'
   gem 'rake'
   gem 'foreman'
   gem 'guard'
