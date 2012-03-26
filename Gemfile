@@ -1,5 +1,7 @@
 source :rubygems
 
+gem 'trollop'
+
 group :development do
   gem 'cucumber'
   gem 'rspec'
