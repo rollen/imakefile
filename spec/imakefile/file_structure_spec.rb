@@ -2,19 +2,27 @@ require_relative '../../lib/imakefile/file_structure.rb'
 require 'rspec-spies'
 
 module IMakeFile
-  class SpyFileUtils; end
-
   describe FileStructure do
     describe '.directory' do
-      it 'should interface with fileutils to create a directory' do
+      before(:each) do
         SpyFileUtils = Class.new
-        fileutils = SpyFileUtils.new
-        fileutils.stub!(:mkdir).and_return( nil )
+        @fileutils = SpyFileUtils.new
+        @fileutils.stub!(:mkdir).and_return( nil )
 
-        fs = FileStructure.new(fileutils)
+        Output = Class.new
+        @output = Output.new
+        @output.stub!(:write).and_return( nil )
+
+        fs = FileStructure.new(@fileutils, @output)
         fs.directory('index')
+      end
 
-        fileutils.should have_received(:mkdir).with('index')
+      it 'should output success when the file has been successfully created' do
+        @output.should have_received(:write).with('created index/')
+      end
+
+      it 'should interface with fileutils to create a directory' do
+        @fileutils.should have_received(:mkdir).with('index')
       end
     end
   end
