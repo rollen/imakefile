@@ -10,12 +10,28 @@ Feature: Make a Filestructure of a program
     Then a folder named index should be created
     And I should see 'created index/'
 
-
   Scenario: Developer creates a file
     Given that a file named myfile does not exist
     When file('index') is invoked
     Then a file named index should be created
     And I should see 'created file'
+
+  Scenario: Developer creates a file from an erb template
+    Given the following erb template named classy
+      """
+      class <%= params[:name] %>
+        def initialize
+        end
+      end
+      """
+    When I create a file named classy from the template
+    Then I should see the following generate file
+      """
+      class Classy
+        def initialize
+        end
+      end
+      """
 
   Scenario: Developer creates a nested directory stucture
     Given that the following directories do not exist

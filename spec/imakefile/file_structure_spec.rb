@@ -7,6 +7,15 @@ module IMakeFile
       SpyFileUtils = Class.new
       Output = Class.new
       SpyDir = Class.new
+      SpyFile = Class.new do
+        def open(name, mode)
+          yield(self)
+        end
+
+        def puts(string)
+        end
+      end
+      ERBSpy = Class.new
     end
 
     before(:each) do
@@ -22,15 +31,28 @@ module IMakeFile
     describe '.file' do
       before(:each) do
         @fileutils.stub!(:touch).with('index')
-        @fs.file('index')
       end
 
       it 'should interface with fileutils to create a file' do
+        @fs.file('index')
         @fileutils.should have_received(:touch).with('index')
       end
 
       it 'should output success when the file has been successfully created' do
+        @fs.file('index')
         @output.should have_received(:write).with('created index')
+      end
+
+      it 'should allow for a file to use a template' do
+        @file = SpyFile.new
+
+        @erb = ERBSpy
+        @erb.stub!(:result)
+
+        @fs = FileStructure.new(@fileutils, @output, nil, { 'classy' => "<%= params[:name] %>" }, @file, @erb)
+        @fs.stub!("write_contents")
+        @fs.file('index', 'classy', { :name => 'Classy' })
+        @fs.should have_received(:write_contents).with("<%= params[:name] %>", {:name => 'Classy'})
       end
     end
 

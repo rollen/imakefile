@@ -28,6 +28,6 @@ def create_file_structure
 
   @dir = Dir
 
-  IMakeFile::FileStructure.new(@fileutils, @output, @dir)
+  IMakeFile::FileStructure.new(@fileutils, @output, @dir, nil)
 end
 

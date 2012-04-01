@@ -24,7 +24,7 @@ When /^directory\('index'\) is invoked$/ do
   @output = Output.new(@buffer)
   @fileutils = FileUtils
 
-  @builder = IMakeFile::FileStructure.new(@fileutils, @output, nil)
+  @builder = IMakeFile::FileStructure.new(@fileutils, @output, nil, nil)
   @builder.directory('index')
 end
 
@@ -63,6 +63,27 @@ end
 
 Then /^I should see 'created file'$/ do
   @buffer.include?('created index').should be_true
+end
+
+
+Given /^the following erb template named classy$/ do |erb_template|
+  @template = { 'classy' => erb_template }
+end
+
+When /^I create a file named classy from the template$/ do
+  @buffer = []
+  @output = Output.new(@buffer)
+  @fileutils = FileUtils
+
+  @erb = ERB
+  @file = File
+
+  @builder = IMakeFile::FileStructure.new(@fileutils, @output, nil, @template, @file, @erb)
+  @builder.file('index', 'classy', { :name => 'Classy' })
+end
+
+Then /^I should see the following generate file$/ do |string|
+  File.read('index').should =~ Regexp.new(string)
 end
 
 
