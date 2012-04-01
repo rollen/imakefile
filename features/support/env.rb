@@ -5,7 +5,6 @@ module DirectoryHelpers
     File.expand_path('../../../sandbox/', __FILE__)
   end
 end
-
 module Doubles
   class Output
     def initialize(buffer)
@@ -18,5 +17,17 @@ module Doubles
   end
 end
 
+
 World(Doubles)
 World(DirectoryHelpers)
+
+def create_file_structure
+  @buffer = []
+  @output = Output.new(@buffer)
+  @fileutils = FileUtils
+
+  @dir = Dir
+
+  IMakeFile::FileStructure.new(@fileutils, @output, @dir)
+end
+
