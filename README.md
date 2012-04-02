@@ -72,7 +72,7 @@ When we run the following code from the folder '/path/to/any/folder'
 
     builder.file('classy.rb', 'template.erb', {:name => 'Classy'})
 
-Then we will see the following file named 'classy.rb' at '/path/to/any/folder'
+Then we will see the file named 'classy.rb' generated at '/path/to/any/folder'
 
     class Classy
       def initialize 
