@@ -53,3 +53,29 @@ If you would like to create a filestructure similar to Rails all you have to do 
     end
 
 running this example will create a filestructure similar to the above
+
+### Using Erb templates
+
+Given that we have the following erb file, named 'template.erb', located at '/path/to/erb'
+    
+    class <%= params[:name] %>
+      def initialize
+      end
+    end
+
+When we run the following code from the folder '/path/to/any/folder'
+
+    require 'rubygems'
+    require 'imakefile'
+
+    builder = IMakeFile::Factory.create_filestructure(:templates_path => '/path/to/erb')
+
+    builder.file('classy.rb', 'template.erb', {:name => 'Classy'})
+
+Then we will see the following file named 'classy.rb' at '/path/to/any/folder'
+
+    class Classy
+      def initialize 
+      end
+    end
+
