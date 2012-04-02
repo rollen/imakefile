@@ -11,10 +11,11 @@ module IMakeFile
       @erb = erb
     end
 
+    #fileutils file output erb
     def file(name, template_name=nil, params=nil)
       @fileutils.touch(name)
       @file.open(name, 'w') do |f|
-        f.puts write_contents(@templates[template_name], params) 
+        f.puts write_contents(@templates.fetch(template_name), params) 
       end unless template_name.nil? 
       @output.write("created #{name}")
     end
@@ -23,6 +24,7 @@ module IMakeFile
       @erb.new(template).result(binding).chomp
     end
 
+    #fileutils output dir
     def directory(name)
       @fileutils.mkdir(name) 
       @output.write("created #{name}/")
