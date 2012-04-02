@@ -6,8 +6,8 @@ module IMakeFile
       dir = Dir
       file = File
       output = IMakeFile::PrettyFormatter.new
-      templates = IMakeFile::TemplateReader.new(options[:templates_path], file)
-      builder = IMakeFile::FileStructure.new(@fileutils, @output, @dir, @template, @file, @erb)
+      templates = IMakeFile::TemplateReader.new(file,options[:templates_path])
+      builder = IMakeFile::FileStructure.new(fileutils, output, dir, templates, file, erb)
     end
   end
 end

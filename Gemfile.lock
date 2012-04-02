@@ -60,7 +60,6 @@ GEM
     slop (2.4.4)
     term-ansicolor (1.0.7)
     thor (0.14.6)
-    trollop (1.16.2)
 
 PLATFORMS
   ruby
@@ -77,4 +76,3 @@ DEPENDENCIES
   rake
   rspec
   rspec-spies
-  trollop
