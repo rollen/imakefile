@@ -1,5 +1,5 @@
 require_relative '../../lib/imakefile/pretty_formatter.rb'
-require 'rspec-spies'
+require_relative 'spies/spies.rb'
 
 module IMakeFile
   describe PrettyFormatter do

@@ -1,23 +1,8 @@
 require_relative '../../lib/imakefile/file_structure.rb'
-require 'rspec-spies'
+require_relative 'spies/spies.rb'
 
 module IMakeFile
   describe FileStructure do
-    before(:all) do
-      SpyFileUtils = Class.new
-      Output = Class.new
-      SpyDir = Class.new
-      SpyFile = Class.new do
-        def open(name, mode)
-          yield(self)
-        end
-
-        def puts(string)
-        end
-      end
-      ERBSpy = Class.new
-    end
-
     before(:each) do
       @fileutils = SpyFileUtils.new
 
