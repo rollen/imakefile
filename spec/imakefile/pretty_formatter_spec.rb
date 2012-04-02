@@ -1,16 +1,7 @@
+require_relative '../../lib/imakefile/pretty_formatter.rb'
 require 'rspec-spies'
 
 module IMakeFile
-  class PrettyFormatter
-    def write(text)
-      puts green(text)
-    end
-
-    def green(string)
-      "\e[32m#{string}\e"
-    end
-  end
-
   describe PrettyFormatter do
     describe '.write' do
       it 'outputs formatted text to stdout' do

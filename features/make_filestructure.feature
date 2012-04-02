@@ -15,7 +15,7 @@ Feature: Make a Filestructure of a program
     When file('index') is invoked
     Then a file named index should be created
     And I should see 'created file'
-
+  
   Scenario: Developer creates a file from an erb template
     Given the following erb template named classy
       """

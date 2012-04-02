@@ -43,16 +43,28 @@ module IMakeFile
         @output.should have_received(:write).with('created index')
       end
 
-      it 'should allow for a file to use a template' do
-        @file = SpyFile.new
+      context 'creating files using templates' do
+        before(:each) do
+          @file = SpyFile.new
 
-        @erb = ERBSpy
-        @erb.stub!(:result)
+          @erb = ERBSpy
+          @erb.stub!(:result)
 
-        @fs = FileStructure.new(@fileutils, @output, nil, { 'classy' => "<%= params[:name] %>" }, @file, @erb)
-        @fs.stub!("write_contents")
-        @fs.file('index', 'classy', { :name => 'Classy' })
-        @fs.should have_received(:write_contents).with("<%= params[:name] %>", {:name => 'Classy'})
+          @templates = {'classy' => "<%= params[:name] %>" }
+          @templates.stub!(:fetch).and_return("<%= params[:name] %>")
+
+          @fs = FileStructure.new(@fileutils, @output, nil, @templates, @file, @erb)
+          @fs.stub!("write_contents")
+          @fs.file('index', 'classy', { :name => 'Classy' })
+        end
+
+        it 'should find the right template' do
+          @templates.should have_received(:fetch).with('classy')
+        end
+
+        it 'should allow for a file to use a template' do
+          @fs.should have_received(:write_contents).with("<%= params[:name] %>", {:name => 'Classy'})
+        end
       end
     end
 
